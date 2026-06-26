@@ -1,63 +1,29 @@
-const VALID_CATEGORIES=[ "Food" , "Transport" , "Utilities" , "Entertainment" , "Rent"] as const;
-type ExpenseCategory=typeof VALID_CATEGORIES[number];
-class Expense{
-  private readonly expenseId: number;
-  private readonly expenseCreatedAt: Date;
-  private expenseTitle: string;
-  private expenseAmount: number;
-  private expenseCategory: ExpenseCategory;
-  private expenseIsPaid: boolean;
-
-    constructor(id: number, title: string, amount: number, category: ExpenseCategory, createdAt: Date, isPaid: boolean){
-      this.expenseId=id;
-      if (title.trim().length===0) throw new Error ("Title can't be empty !");
-      this.expenseTitle=title;
-      if (amount<=0) throw new Error("Amount can't be negative !")
-      this.expenseAmount=amount;
-      this.expenseCategory=category;
-      this.expenseCreatedAt=createdAt;
-      this.expenseIsPaid=isPaid;
-    }
-    get amount(): number {
-      return this.expenseAmount;
-    }
-    updateAmount(newAmount: number): void {
-      if (newAmount<=0) throw new Error("Amount can't be negative !");
-      this.expenseAmount=newAmount;
-    }
-    get Id(): number {
-      return this.expenseId;
-    }
-    get Title(): string {
-      return this.expenseTitle;
-    }
-    updateTitle(newTitle: string): void{
-      if (newTitle.trim().length===0 ) throw new Error("Title can't be empty !");
-      this.expenseTitle=newTitle.trim();
-    }
-    get Category(): ExpenseCategory{
-      return this.expenseCategory;
-    }
-    updateCategory(newCategory:ExpenseCategory): void{
-      if(!VALID_CATEGORIES.includes(newCategory)) throw new Error ("Category must be within Expense Categories !");
-      this.expenseCategory=newCategory;
-    }
-    get isPaid(): boolean{
-      return this.expenseIsPaid;
-    }
-    markAsPaid(): void{
-      this.expenseIsPaid=true;
-    }
-    markAsUnpaid(): void{
-      this.expenseIsPaid=false;
-    }
-    get createdAt(): Date{
-      return this.expenseCreatedAt;
-    }
-
-}
-const favdate=new Date(2026, 3, 15);
-const expense=new Expense(1234, "confession", 1000, "Transport", favdate, true);
-
-console.log(expense.amount);
-//console.log(favedate_expense);
+//used for testing
+import {Expense} from "./expenses/entities/expense.entity.js";
+import { ExpenseRepository } from "./repositories/expense.repository.js";
+//creating expence instances
+const expense1=new Expense(111, "expense1", 1000,"Transport", new Date(2026, 5, 15), true );
+const expense2=new Expense(222, "expense2", 2000,"Food", new Date(2016, 4, 15), true );
+const expense3=new Expense(333, "expense3", 3000,"Utilities", new Date(2025, 2, 10), true );
+//creating expenserepository instance
+const repository=new ExpenseRepository;
+//adding expenses to repository
+repository.saveExpense(expense1);
+repository.saveExpense(expense2);
+repository.saveExpense(expense3);
+//print repository.findAll()
+console.log(repository.findAll());
+//test repository.findById() with valid id
+repository.findById(222);
+//test repository.findById() with invalid id
+repository.findById(444);
+//test repository.existsById() with valid id
+repository.existsById(333);
+//test repository.existsById() with invalid id
+repository.existsById(100);
+//test deleteById() with valid id
+repository.deleteById(111);
+//test deleteById() with invalid id
+repository.deleteById(200);
+//print repository.findAll() again
+console.log(repository.findAll());
