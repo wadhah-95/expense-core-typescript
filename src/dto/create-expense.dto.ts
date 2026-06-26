@@ -8,6 +8,13 @@ for creating an expense, the user should provide:
 !!! He should not create: id and/or createdat because they should be created by the system !!!*/
 
 import {
-  VALID_CATEGORIES,
+  //VALID_CATEGORIES, don't really need this
   type ExpenseCategory,
 } from "../types/expense-category.type.js";
+
+export interface CreateExpenseDto{
+  title: string;
+  amount: number;
+  category: ExpenseCategory;
+  isPaid?: boolean;
+}
