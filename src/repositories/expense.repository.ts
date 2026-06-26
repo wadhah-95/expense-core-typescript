@@ -13,6 +13,7 @@ check if expense exists
 import {Expense} from "../expenses/entities/expense.entity.js";
 export class ExpenseRepository{
   private expenses: Expense[]=[];
+  private nextId: number=1;
   
   saveExpense(expense: Expense): Expense{
     this.expenses.push(expense);
@@ -44,5 +45,10 @@ export class ExpenseRepository{
       if (expense.Id===id) return true;
     }
     return false;
+  }
+
+  private generateId(){
+    return this.nextId;
+    this.nextId++;
   }
 }
