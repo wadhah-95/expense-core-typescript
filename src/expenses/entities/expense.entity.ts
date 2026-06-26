@@ -3,7 +3,7 @@ import {
   VALID_CATEGORIES,
   type ExpenseCategory,
 } from "../../types/expense-category.type.js";
-class Expense{
+export class Expense{
   private readonly expenseId: number;
   private readonly expenseCreatedAt: Date;
   private expenseTitle: string;
