@@ -1,5 +1,8 @@
-const VALID_CATEGORIES=[ "Food" , "Transport" , "Utilities" , "Entertainment" , "Rent"] as const;
-type ExpenseCategory=typeof VALID_CATEGORIES[number];
+//This file contains the expense class
+import {
+  VALID_CATEGORIES,
+  type ExpenseCategory,
+} from "../../types/expense-category.type.js";
 class Expense{
   private readonly expenseId: number;
   private readonly expenseCreatedAt: Date;
