@@ -38,7 +38,29 @@ export class ExpenseService{
     
   }
 
-
+  updateExpense(id: number, updexpensedto: UpdateExpenseDto): Expense{
+    const expense=this.expenserepository.findById(id);
+    if(expense==undefined) {throw new Error("No expense with that id")}
+    else{
+    
+    if(updexpensedto.amount!==undefined){
+      expense?.updateAmount(updexpensedto.amount);
+    }
+    if(updexpensedto.category!==undefined){
+      expense?.updateCategory(updexpensedto.category);
+    }
+    if(updexpensedto.title!==undefined){
+      expense?.updateTitle(updexpensedto.title);
+    }
+    if(updexpensedto.isPaid!==undefined){
+      if(updexpensedto.isPaid===true){
+        expense?.markAsPaid();
+      }
+      else expense?.markAsUnpaid();
+    }
+  }
+    return expense;  
+  }
 
 
 
